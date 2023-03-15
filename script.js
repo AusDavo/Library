@@ -55,5 +55,13 @@ function handleFormSubmit(event) {
   form.reset();
 }
 
+const showFormButton = document.getElementById("show-form-button");
+const myForm = document.getElementById("add-book-form");
+
+showFormButton.addEventListener("click", () => {
+  myForm.style.display = "block";
+  showFormButton.style.display = "none"; // Hide the button
+});
+
 const form = document.getElementById("add-book-form");
 form.addEventListener("submit", handleFormSubmit);
