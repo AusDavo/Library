@@ -1,3 +1,16 @@
 #add-book-form {
   display: none;
 }
+
+#book-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.book-card {
+  background-color: #f7f7f7; /* off-white color */
+  border-radius: 8px; /* rounded corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* shadow effect */
+  padding: 16px; /* add some padding for content */
+}

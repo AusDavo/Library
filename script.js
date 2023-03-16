@@ -40,7 +40,7 @@ function Book(title, author, pages, read) {
 
 function addBookToLibrary(title, author, pages, read) {
   let newBook = new Book(title, author, pages, read);
-  myLibrary.push(newBook);
+  myLibrary.unshift(newBook);
 }
 
 function handleFormSubmit(event) {
@@ -53,6 +53,16 @@ function handleFormSubmit(event) {
 
   addBookToLibrary(title, author, pages, read);
   form.reset();
+
+  // Clear the existing book cards
+  const bookCards = document.getElementById("book-cards");
+  bookCards.innerHTML = "";
+
+  // Create a new card for each book in myLibrary and add it to the bookCards container
+  myLibrary.forEach((book) => {
+    const card = createBookCard(book);
+    bookCards.appendChild(card);
+  });
 }
 
 const showFormButton = document.getElementById("show-form-button");
@@ -65,3 +75,33 @@ showFormButton.addEventListener("click", () => {
 
 const form = document.getElementById("add-book-form");
 form.addEventListener("submit", handleFormSubmit);
+
+const bookCards = document.getElementById("book-cards");
+
+myLibrary.forEach((book) => {
+  const card = createBookCard(book);
+  bookCards.appendChild(card);
+});
+
+function createBookCard(book) {
+  const card = document.createElement("div");
+  card.classList.add("book-card");
+
+  const title = document.createElement("h2");
+  title.textContent = book.title;
+  card.appendChild(title);
+
+  const author = document.createElement("p");
+  author.textContent = `by ${book.author}`;
+  card.appendChild(author);
+
+  const pages = document.createElement("p");
+  pages.textContent = `${book.pages} pages`;
+  card.appendChild(pages);
+
+  const read = document.createElement("p");
+  read.textContent = book.read ? "Read" : "Unread";
+  card.appendChild(read);
+
+  return card;
+}
