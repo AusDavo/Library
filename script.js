@@ -1,4 +1,18 @@
-let myLibrary = [
+class Book {
+  constructor(title, author, pages, read = false) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+
+  info() {
+    const readStatement = this.read ? "already read" : "not yet read";
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatement}.`;
+  }
+}
+
+const myLibrary = [
   new Book("To Kill a Mockingbird", "Harper Lee", "281", true),
   new Book("Pride and Prejudice", "Jane Austen", "279", false),
   new Book("1984", "George Orwell", "328", true),
@@ -26,20 +40,8 @@ let myLibrary = [
   new Book("The Canterbury Tales", "Geoffrey Chaucer", "504", false),
 ];
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read || false;
-
-  this.info = function () {
-    const readStatement = this.read ? "already read" : "not yet read";
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatement}.`;
-  };
-}
-
 function addBookToLibrary(title, author, pages, read) {
-  let newBook = new Book(title, author, pages, read);
+  const newBook = new Book(title, author, pages, read);
   myLibrary.unshift(newBook);
 }
 
@@ -54,34 +56,18 @@ function handleFormSubmit(event) {
   addBookToLibrary(title, author, pages, read);
   form.reset();
 
-  // Clear the existing book cards
+  renderBookCards();
+}
+
+function renderBookCards() {
   const bookCards = document.getElementById("book-cards");
   bookCards.innerHTML = "";
 
-  // Create a new card for each book in myLibrary and add it to the bookCards container
   myLibrary.forEach((book) => {
     const card = createBookCard(book);
     bookCards.appendChild(card);
   });
 }
-
-const showFormButton = document.getElementById("show-form-button");
-const myForm = document.getElementById("add-book-form");
-
-showFormButton.addEventListener("click", () => {
-  myForm.style.display = "block";
-  showFormButton.style.display = "none"; // Hide the button
-});
-
-const form = document.getElementById("add-book-form");
-form.addEventListener("submit", handleFormSubmit);
-
-const bookCards = document.getElementById("book-cards");
-
-myLibrary.forEach((book) => {
-  const card = createBookCard(book);
-  bookCards.appendChild(card);
-});
 
 function createBookCard(book) {
   const card = document.createElement("div");
@@ -103,5 +89,32 @@ function createBookCard(book) {
   read.textContent = book.read ? "Read" : "Unread";
   card.appendChild(read);
 
+  const remove = document.createElement("button");
+  remove.textContent = "Remove book";
+  remove.classList.add("remove-button");
+  card.appendChild(remove);
+
+  remove.addEventListener("click", () => {
+    const index = myLibrary.indexOf(book);
+    if (index > -1) {
+      myLibrary.splice(index, 1);
+    }
+    renderBookCards();
+  });
+
   return card;
 }
+
+const showFormButton = document.getElementById("show-form-button");
+const myForm = document.getElementById("add-book-form");
+
+showFormButton.addEventListener("click", () => {
+  myForm.style.display = "block";
+  showFormButton.style.display = "none";
+});
+
+const form = document.getElementById("add-book-form");
+form.addEventListener("submit", handleFormSubmit);
+
+// Call renderBookCards function to create the initial book cards
+renderBookCards();
