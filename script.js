@@ -85,12 +85,32 @@ function createBookCard(book) {
   pages.textContent = `${book.pages} pages`;
   card.appendChild(pages);
 
-  const read = document.createElement("p");
+  /*const read = document.createElement("p");
   read.textContent = book.read ? "Read" : "Unread";
-  card.appendChild(read);
+  card.appendChild(read);*/
+
+  const checkbox = document.createElement("input");
+  const index = myLibrary.indexOf(book);
+  checkbox.setAttribute("type", "checkbox");
+  checkbox.setAttribute("id", `s${index}`);
+  checkbox.classList.add("switch");
+  checkbox.checked = book.read; // set the initial checkbox state
+  card.appendChild(checkbox);
+
+  // Listen for the change event on the checkbox
+  checkbox.addEventListener("change", (event) => {
+    // Update the corresponding object in the array
+    book.read = event.target.checked;
+    renderBookCards();
+  });
+
+  const label = document.createElement("label");
+  label.setAttribute("for", `s${index}`);
+  label.textContent = book.read ? "Read" : "Unread";
+  card.appendChild(label);
 
   const remove = document.createElement("button");
-  remove.textContent = "Remove book";
+  remove.textContent = "X";
   remove.classList.add("remove-button");
   card.appendChild(remove);
 

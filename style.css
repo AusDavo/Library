@@ -7,3 +7,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
 }
+
+.remove-button {
+  background-color: red;
+}
