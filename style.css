@@ -13,6 +13,7 @@
   background-color: rgb(247, 245, 245);
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1rem;
+  align-items: flex-start;
 }
 
 .book-card {
