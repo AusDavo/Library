@@ -73,6 +73,11 @@ function createBookCard(book) {
   const card = document.createElement("div");
   card.classList.add("book-card");
 
+  const remove = document.createElement("button");
+  remove.textContent = "X";
+  remove.classList.add("remove-button");
+  card.appendChild(remove);
+
   const title = document.createElement("h2");
   title.textContent = book.title;
   card.appendChild(title);
@@ -84,10 +89,6 @@ function createBookCard(book) {
   const pages = document.createElement("p");
   pages.textContent = `${book.pages} pages`;
   card.appendChild(pages);
-
-  /*const read = document.createElement("p");
-  read.textContent = book.read ? "Read" : "Unread";
-  card.appendChild(read);*/
 
   const checkbox = document.createElement("input");
   const index = myLibrary.indexOf(book);
@@ -108,11 +109,6 @@ function createBookCard(book) {
   label.setAttribute("for", `s${index}`);
   label.textContent = book.read ? "Read" : "Unread";
   card.appendChild(label);
-
-  const remove = document.createElement("button");
-  remove.textContent = "X";
-  remove.classList.add("remove-button");
-  card.appendChild(remove);
 
   remove.addEventListener("click", () => {
     const index = myLibrary.indexOf(book);
